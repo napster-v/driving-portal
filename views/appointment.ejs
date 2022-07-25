@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('layouts/header'); %>
+    <meta charset="UTF-8">
+    <title>G2 Test</title>
+</head>
+<body>
+<%- include('layouts/navigation'); %>
+<header class="masthead" style="background-image: url('assets/img/home-bg.jpg')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    <h1>Appointment Creation</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            <p></p>
+            <div class="my-5">
+                <h2>Generate Appointments</h2>
+                <form id="contactForm" method="post" action="/fetch">
+                    <% if(date === undefined){ %>
+                        <div class="form-floating">
+                            <input class="form-control" name="date" id="date" type="date" placeholder="Date"/>
+                            <label for="title">Date</label>
+                            <br/>
+                            <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Fetch
+                            </button>
+                        </div>
+                    <% }else{ %>
+                        <div class="form-floating">
+                            <input class="form-control" name="date" id="date" type="date"
+                                   value=<%= date %> placeholder="Date"/>
+                            <label for="title">Date</label>
+                            <br/>
+                            <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Fetch
+                            </button>
+                        </div>
+                    <% } %>
+                    <br>
+                    <% if (timeSlots !== undefined) { %>
+                        <% for (var i = 0; i < timeSlots.length; i++) { %>
+                            <% if (timeSlots[i].isAvailable){ %>
+                                <div class="btn-group" role="group">
+                                    <input value="<%= timeSlots[i].time %>" name="time" type="checkbox"
+                                           class="btn-check"
+                                           id=<%= timeSlots[i].time %> autocomplete="off">
+                                    <label class="btn btn-outline-primary" for=<%= timeSlots[i].time %>>
+                                        <%= timeSlots[i].time %>
+                                    </label>
+                                </div>
+                            <% }else{ %>
+                                <div class="btn-group" role="group">
+                                    <input value="<%= timeSlots[i].time %>" name="time" type="checkbox"
+                                           class="btn-check"
+                                           id=<%= timeSlots[i].time %> autocomplete="off" disabled>
+                                    <label class="btn btn-outline-primary" for=<%= timeSlots[i].time %>>
+                                        <%= timeSlots[i].time %>
+                                    </label>
+                                </div>
+                            <% } %>
+                        <% } %>
+            </div>
+            <!--                    </div>-->
+            <br/>
+            <br/>
+            <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Submit
+            </button>
+            <% } %>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+<%- include('layouts/footer'); %>
+</body>
+</html>
