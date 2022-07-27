@@ -10,6 +10,7 @@ module.exports = async (req, res) => {
       lastName: req.body.lastName ? req.body.lastName : " ",
       age: req.body.age ? req.body.age : 0,
       licenseNo: req.body.licenseNo ? req.body.licenseNo : " ",
+      appointment: null,
       carDetails: {
         // nested object
         make: req.body.make ? req.body.make : " ",

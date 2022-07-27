@@ -1,6 +1,5 @@
 const appointmentModel = require("../models/appointment");
 
-
 module.exports = async (req, res) => {
   let slots = [
     { time: "09:00", isAvailable: true },
@@ -46,13 +45,6 @@ module.exports = async (req, res) => {
         }
       });
     });
-    // slots.map((slot) => {
-    //   appointments.map((appointment) => {
-    //     if (slot.time === appointment.time) {
-    //       slot.isAvailable = false;
-    //     }
-    //   });
-    // });
     console.log(slots);
     res.render("appointment", { timeSlots: slots, date: req.body.date });
   }

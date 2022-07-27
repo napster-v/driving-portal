@@ -26,6 +26,7 @@ const LoginController = require("./controllers/LoginController");
 const G2TestController = require("./controllers/G2TestController");
 const AppointmentView = require("./controllers/AppointmentViewController");
 const AppointmentFetchController = require("./controllers/AppointmentFetchController");
+const AuthMiddleware = require("./middleware/AuthFilter");
 
 mongoose.connect(
   "mongodb+srv://fullstackp:qEteQu72of0mSMMx@cluster0.2w7svte.mongodb.net/?retryWrites=true&w=majority"
@@ -61,13 +62,13 @@ app.get("/", IndexView);
 app.get("/login", LoginView);
 app.get("/logout", LogoutView);
 app.get("/signup", RegisterView);
-app.get("/dashboard", DashboardView);
-app.get("/g", GTestView);
-app.get("/g2", G2TestView);
-app.get("/appointment", AppointmentView);
+app.get("/dashboard", AuthMiddleware, DashboardView);
+app.get("/g", AuthMiddleware, GTestView);
+app.get("/g2", AuthMiddleware, G2TestView);
+app.get("/appointment", AuthMiddleware, AppointmentView);
 
 //APIs (Form Data)
 app.post("/register", RegisterController);
 app.post("/authenticate", LoginController);
-app.post("/update", G2TestController);
-app.post("/fetch", AppointmentFetchController);
+app.post("/update", AuthMiddleware, G2TestController);
+app.post("/fetch", AuthMiddleware, AppointmentFetchController);
