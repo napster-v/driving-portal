@@ -17,21 +17,21 @@ module.exports = async (req, res) => {
       .sort({ time: 1 })
       .then((result) => {
         console.log(result);
-        res.render("g2", {
-          timeSlots: result,
-          date: req.body.date,
-          result: undefined,
-        });
+          res.render("g", {
+              timeSlots: result,
+              date: req.body.date,
+              result: user,
+          });
       });
   } else {
-    appointmentModel
-      .findOneAndUpdate(
-        {
-          date: req.body.date,
-          time: req.body.time,
-          appointmentType: req.body.appointmentType.toUpperCase(),
-        },
-        { isTimeSlotAvailable: false },
+      appointmentModel
+          .findOneAndUpdate(
+              {
+                  date: req.body.date,
+                  time: req.body.time,
+                  appointmentType: req.body.appointmentType.toUpperCase(),
+              },
+              {isTimeSlotAvailable: false },
         {
           returnDocument: "after",
         }
@@ -60,7 +60,7 @@ module.exports = async (req, res) => {
           }
         )
           .then((result) => {
-            res.redirect("/g2");
+            res.redirect("/g");
           })
           .catch((err) => {
             console.log(err);

@@ -29,55 +29,106 @@
                         <div class="form-floating">
                             <input class="form-control" name="date" id="date" type="date" placeholder="Date"/>
                             <label for="title">Date</label>
-                            <br/>
+                            <p>Select Appointment Type</p>
+                            <div class="form-floating">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="appointmentType"
+                                           id="inlineRadio1"
+                                           value="G">
+                                    <label class="form-check-label" for="inlineRadio1">G</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="appointmentType"
+                                           id="inlineRadio2"
+                                           value="G2">
+                                    <label class="form-check-label" for="inlineRadio2">G2</label>
+                                </div>
+                                <br/>
+                                <br/>
+                            </div>
                             <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Fetch
                             </button>
                         </div>
                     <% }else{ %>
+                    <div class="form-floating">
+                        <input class="form-control" name="date" id="date" type="date"
+                               value=<%= date %> placeholder="Date"/>
+                        <label for="title">Date</label>
+                        <br/>
+                        <p>Select Appointment Type</p>
+                        <% if (apptType === "G"){ %>
                         <div class="form-floating">
-                            <input class="form-control" name="date" id="date" type="date"
-                                   value=<%= date %> placeholder="Date"/>
-                            <label for="title">Date</label>
-                            <br/>
-                            <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Fetch
-                            </button>
+                            <div class="form-check form-check-inline">
+                                <input checked disabled class="form-check-input" type="radio"
+                                       name="appointmentType"
+                                       id="inlineRadio1"
+                                       value="G">
+                                <label class="form-check-label" for="inlineRadio1">G</label>
+                                <input type="hidden" name="appointmentType" value="G">
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input disabled class="form-check-input" type="radio" name="appointmentType"
+                                       id="inlineRadio2"
+                                       value="G2">
+                                <label class="form-check-label" for="inlineRadio2">G2</label>
+                            </div>
                         </div>
-                    <% } %>
-                    <br>
-                    <% if (timeSlots !== undefined) { %>
-                        <% for (var i = 0; i < timeSlots.length; i++) { %>
-                            <% if (timeSlots[i].isAvailable){ %>
-                                <div class="btn-group" role="group">
-                                    <input value="<%= timeSlots[i].time %>" name="time" type="checkbox"
-                                           class="btn-check"
-                                           id=<%= timeSlots[i].time %> autocomplete="off">
-                                    <label class="btn btn-outline-primary" for=<%= timeSlots[i].time %>>
-                                        <%= timeSlots[i].time %>
-                                    </label>
-                                </div>
-                            <% }else{ %>
-                                <div class="btn-group" role="group">
-                                    <input value="<%= timeSlots[i].time %>" name="time" type="checkbox"
-                                           class="btn-check"
-                                           id=<%= timeSlots[i].time %> autocomplete="off" disabled>
-                                    <label class="btn btn-outline-primary" for=<%= timeSlots[i].time %>>
-                                        <%= timeSlots[i].time %>
-                                    </label>
+                            <% }else { %>
+                                <div class="form-floating">
+                                    <div class="form-check form-check-inline">
+                                        <input disabled class="form-check-input" type="radio"
+                                               name="appointmentType"
+                                               id="inlineRadio3"
+                                               value="G">
+                                        <label class="form-check-label" for="inlineRadio3">G</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input checked disabled class="form-check-input" type="radio"
+                                               name="appointmentType"
+                                               id="inlineRadio4"
+                                               value="G2">
+                                        <label class="form-check-label" for="inlineRadio4">G2</label>
+                                        <input type="hidden" name="appointmentType" value="G2">
+                                    </div>
                                 </div>
                             <% } %>
+                        </div>
                         <% } %>
+                        <br/>
+                        <br>
+                        <% if (timeSlots !== undefined) { %>
+                            <% for (var i = 0; i < timeSlots.length; i++) { %>
+                                <% if (timeSlots[i].isAvailable){ %>
+                                    <div class="btn-group" role="group">
+                                        <input value="<%= timeSlots[i].time %>" name="time" type="checkbox"
+                                               class="btn-check"
+                                               id=<%= timeSlots[i].time %> autocomplete="off">
+                                        <label class="btn btn-outline-primary" for=<%= timeSlots[i].time %>>
+                                            <%= timeSlots[i].time %>
+                                        </label>
+                                    </div>
+                                <% }else{ %>
+                                    <div class="btn-group" role="group">
+                                        <input value="<%= timeSlots[i].time %>" name="time" type="checkbox"
+                                               class="btn-check"
+                                               id=<%= timeSlots[i].time %> autocomplete="off" disabled>
+                                        <label class="btn btn-outline-primary" for=<%= timeSlots[i].time %>>
+                                            <%= timeSlots[i].time %>
+                                        </label>
+                                    </div>
+                                <% } %>
+                            <% } %>
+                    </div>
+                    <br/>
+                    <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Submit
+                    </button>
+                    <br/>
+                    <br/>
+                    <% } %>
+                </form>
             </div>
-            <!--                    </div>-->
-            <br/>
-            <br/>
-            <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Submit
-            </button>
-            <% } %>
-            </form>
         </div>
     </div>
-</div>
-</div>
-<%- include('layouts/footer'); %>
+    <%- include('layouts/footer'); %>
 </body>
 </html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('layouts/header'); %>
+    <meta charset="UTF-8">
+    <title>G2 Test</title>
+</head>
+<body>
+<%- include('layouts/navigation'); %>
+<header class="masthead" style="background-image: url('assets/img/home-bg.jpg')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    <h1>Examiner Dashboard</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            <p></p>
+            <div class="my-5">
+                <h1>Examinees</h1>
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Car Make</th>
+                        <th scope="col">Car Model</th>
+                        <th scope="col">Car Plate No</th>
+                        <th scope="col">Test Type</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% for(var i = 0; i < data.length; i++){ %>
+<!--                        <p><% data[i]._id %></p>-->
+                        <tr onclick='window.location="/candidate/<%= data[i]._id %>"' style="cursor: pointer">
+                            <th scope="row"><%= i + 1 %></th>
+                            <td><%= data[i].firstName %></td>
+                            <td><%= data[i].lastName %></td>
+                            <td><%= data[i].carDetails.make %></td>
+                            <td><%= data[i].carDetails.model %></td>
+                            <td><%= data[i].carDetails.plateNo %></td>
+                            <td><%= data[i].testType %></td>
+                        </tr>
+<!--                        </a>-->
+                    <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('layouts/footer'); %>
+</body>
+</html>

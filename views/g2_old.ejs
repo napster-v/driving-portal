@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('layouts/header'); %>
+    <meta charset="UTF-8">
+    <title>G2 Test</title>
+</head>
+<body>
+<%- include('layouts/navigation'); %>
+<header class="masthead" style="background-image: url('assets/img/home-bg.jpg')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    <h1>G2 Test</h1>
+                    <span class="subheading">A Blog Theme by Start Bootstrap</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            <div class="my-5">
+                <form id="contactForm" method="post" action="/update">
+                    <h2>Book Appointment</h2>
+                    <% if(date === undefined){ %>
+                        <div class="form-floating">
+                            <input class="form-control" name="date" id="date" type="date" placeholder="Date"/>
+                            <label for="title">Date</label>
+                            <br/>
+                            <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Fetch
+                            </button>
+                        </div>
+                    <% }else{ %>
+                        <div class="form-floating">
+                            <input class="form-control" name="date" id="date" type="date"
+                                   value=<%= date %> placeholder="Date"/>
+                            <label for="title">Date</label>
+                            <br/>
+                            <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Fetch
+                            </button>
+                        </div>
+                    <% } %>
+                    <br>
+                    <% if (timeSlots !== undefined) { %>
+                            <% for (var i = 0; i < timeSlots.length; i++) { %>
+                        <div class="btn-group" role="group">
+                        <input name="time" value="<%= timeSlots[i].time %>" type="radio" class="btn-check"
+                                       id=<%= timeSlots[i].time %> autocomplete="off">
+                                <label class="btn btn-outline-primary" for=<%= timeSlots[i].time %>>
+                                    <%= timeSlots[i].time %>
+                                </label>
+                        </div>
+                            <% } %>
+                    <% } %>
+                    <br/>
+                    <h2>Personal Information</h2>
+                    <div class="form-floating">
+                        <input class="form-control" id="name" name="lastName" type="text"
+                               placeholder="Enter your name..."
+                               data-sb-validations="required" value='<%= result.firstName %>' readonly/>
+                        <label for="name">First Name</label>
+                        <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                    </div>
+                    <div class="form-floating">
+                        <input class="form-control" id="name" name="lastName" type="text"
+                               placeholder="Enter your name..."
+                               data-sb-validations="required" value='<%= result.lastName %>' disabled/>
+                        <label for="name">Last Name</label>
+                        <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                    </div>
+                    <div class="form-floating">
+                        <input class="form-control" id="name" name="age" type="text"
+                               placeholder="Enter your name..."
+                               data-sb-validations="required" value='<%= result.age %>' disabled/>
+                        <label for="name">Age</label>
+                        <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                    </div>
+                    <div class="form-floating">
+                        <input class="form-control" id="name" name="licenseNo" type="text"
+                               placeholder="Enter your name..."
+                               value='<%- result.licenseNo %>' data-sb-validations="required" disabled/>
+                        <label for="name">License Number</label>
+                        <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                    </div>
+                    <br/>
+                    <h2>Fill Vehicle Information</h2>
+                    <div class="form-floating">
+                        <input class="form-control" id="name" name="make" type="text" placeholder="Enter your name..."
+                               data-sb-validations="required"/>
+                        <label for="name">Make</label>
+                        <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                    </div>
+                    <div class="form-floating">
+                        <input class="form-control" id="name" name="model" type="text" placeholder="Enter your name..."
+                               data-sb-validations="required"/>
+                        <label for="name">Model</label>
+                        <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                    </div>
+                    <div class="form-floating">
+                        <input class="form-control" id="name" name="year" type="number"
+                               placeholder="Enter your name..."
+                               data-sb-validations="required"/>
+                        <label for="name">Year</label>
+                        <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                    </div>
+                    <div class="form-floating">
+                        <input class="form-control" id="name" name="plateNo" type="text"
+                               placeholder="Enter your name..."
+                               data-sb-validations="required"/>
+                        <label for="name">Plate No</label>
+                        <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                    </div>
+                    <br/>
+
+                    <br/>
+                    <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Submit
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('layouts/footer'); %>
+</body>
+</html>

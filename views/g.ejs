@@ -13,7 +13,7 @@
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <div class="site-heading">
                     <h1>G Test</h1>
-                    <span class="subheading">A Blog Theme by Start Bootstrap</span>
+                    <span class="subheading">Book your G Test Appointment</span>
                 </div>
             </div>
         </div>
@@ -22,24 +22,72 @@
 <div class="container px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
         <div class="col-md-10 col-lg-8 col-xl-7">
+            <% if (result === null || result === undefined){ %>
+                <div class="alert alert-danger" role="alert">
+                    <p>You need to complete the G2 test first before appearing for the G test.</p>
+                </div>
+            <% }else { %>
             <div class="my-5">
-                <form id="contactForm" action="/gdetails" method="post">
-                    <h2>Appointment Details</h2>
-                    <div class="form-floating">
-                        <input class="form-control" id="name" name="lastName" type="text"
-                               placeholder="Enter your name..."
-                               data-sb-validations="required" value='<%= result.appointment.date %>' readonly/>
-                        <label for="name">Date</label>
-                        <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
-                    </div>
-                    <div class="form-floating">
-                        <input class="form-control" id="name" name="lastName" type="text"
-                               placeholder="Enter your name..."
-                               data-sb-validations="required" value='<%= result.appointment.time %>' readonly/>
-                        <label for="name">Time</label>
-                        <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
-                    </div>
+                <form id="contactForm" method="post" action="/gUpdate">
+                    <!--                    Handle G2 taken case-->
+                    <% if (result.testType === "G2"){ %>
+                        <h2>Book Appointment</h2>
+                        <% if(date === undefined){ %>
+                            <div class="form-floating">
+                                <input class="form-control" name="date" id="date" type="date" placeholder="Date"/>
+                                <label for="title">Date</label>
+                                <br/>
+                                <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Fetch
+                                </button>
+                            </div>
+                        <% }else{ %>
+                            <div class="form-floating">
+                                <input class="form-control" name="date" id="date" type="date"
+                                       value=<%= date %> placeholder="Date"/>
+                                <label for="title">Date</label>
+                                <br/>
+                                <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Fetch
+                                </button>
+                            </div>
+                            <br>
+                        <% } %>
+                    <% }else { %>
+                        <h2>Appointment Details</h2>
+                        <div class="form-floating">
+                            <input class="form-control" id="name" name="lastName" type="text"
+                                   placeholder="Enter your name..."
+                                   data-sb-validations="required" value='<%= result.appointment.date %>' readonly/>
+                            <label for="name">Date</label>
+                            <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                        </div>
+                        <div class="form-floating">
+                            <input class="form-control" id="name" name="lastName" type="text"
+                                   placeholder="Enter your name..."
+                                   data-sb-validations="required" value='<%= result.appointment.time %>' readonly/>
+                            <label for="name">Time</label>
+                            <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                        </div>
+                    <% } %>
+                    <% if (timeSlots !== undefined) { %>
+                        <% if (timeSlots.length < 1){ %>
+                            <div class="alert alert-warning" role="alert">
+                                There are no slots available on selected dates. Please select another date.
+                            </div>
+                        <% } %>
+                        <% for (var i = 0; i < timeSlots.length; i++) { %>
+                            <div class="btn-group" role="group">
+                                <input name="time" value="<%= timeSlots[i].time %>" type="radio"
+                                       class="btn-check"
+                                       id=<%= timeSlots[i].time %> autocomplete="off">
+                                <label class="btn btn-outline-primary" for=<%= timeSlots[i].time %>>
+                                    <%= timeSlots[i].time %>
+                                </label>
+                            </div>
+                        <% } %>
+                    <% } %>
                     <br/>
+                    <br/>
+                    <!--                    Personal information will always be available on this page as the user must have already taken G2 test.-->
                     <h2>Personal Information</h2>
                     <div class="form-floating">
                         <input class="form-control" id="name" name="lastName" type="text"
@@ -70,37 +118,102 @@
                         <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
                     </div>
                     <br/>
-                    <h2>Vehicle Information</h2>
-                    <div class="form-floating">
-                        <input class="form-control" id="name" name="make" type="text"
-                               placeholder="Enter your name..." value='<%= result.carDetails.make %>'
-                               data-sb-validations="required" disabled/>
-                        <label for="name">Make</label>
-                        <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
-                    </div>
-                    <div class="form-floating">
-                        <input class="form-control" id="name" name="model" type="text"
-                               placeholder="Enter your name..." value='<%= result.carDetails.model %>'
-                               data-sb-validations="required" disabled/>
-                        <label for="name">Model</label>
-                        <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
-                    </div>
-                    <div class="form-floating">
-                        <input class="form-control" id="name" name="year" type="text"
-                               placeholder="Enter your name..." value='<%= result.carDetails.year %>'
-                               data-sb-validations="required" disabled/>
-                        <label for="name">Year</label>
-                        <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
-                    </div>
-                    <div class="form-floating">
-                        <input class="form-control" id="name" name="plateNo" type="text"
-                               placeholder="Enter your name..." value='<%= result.carDetails.plateNo %>'
-                               data-sb-validations="required" disabled/>
-                        <label for="name">Plate No</label>
-                        <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
-                    </div>
-                    <br/>
+                    <% if(result.testType === "G"){ %>
+                        <h2>Vehicle Information</h2>
+                        <div class="form-floating">
+                            <input class="form-control" id="name" name="make" type="text"
+                                   placeholder="Enter your name..." value='<%= result.carDetails.make %>'
+                                   data-sb-validations="required" readonly/>
+                            <label for="name">Make</label>
+                            <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                        </div>
+                        <div class="form-floating">
+                            <input class="form-control" id="name" name="model" type="text"
+                                   placeholder="Enter your name..." value='<%= result.carDetails.model %>'
+                                   data-sb-validations="required" readonly/>
+                            <label for="name">Model</label>
+                            <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                        </div>
+                        <div class="form-floating">
+                            <input class="form-control" id="name" name="year" type="text"
+                                   placeholder="Enter your name..." value='<%= result.carDetails.year %>'
+                                   data-sb-validations="required" readonly/>
+                            <label for="name">Year</label>
+                            <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                        </div>
+                        <div class="form-floating">
+                            <input class="form-control" id="name" name="plateNo" type="text"
+                                   placeholder="Enter your name..." value='<%= result.carDetails.plateNo %>'
+                                   data-sb-validations="required" readonly/>
+                            <label for="name">Plate No</label>
+                            <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                        </div>
+                        <br/>
+                        <div class="form-floating">
+                            <input hidden class="form-control" id="name" name="appointmentType" type="text"
+                                   value="G"/>
+                        </div>
+                        <% if (result.testType === 'G' && result.isPassed !== null){ %>
+                            <h2>Examiner Feedback</h2>
+                            <div class="form-floating">
+                                <input class="form-control" id="name" name="feedback" type="text"
+                                       placeholder="Enter your name..." value='<%= result.feedback %>'
+                                       data-sb-validations="required" readonly/>
+                                <label for="name">Feedback</label>
+                                <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                            </div>
+                            <% if (result.isPassed){ %>
+                                <p><i class="fa-solid fa-circle-check" style="color: darkgreen;"></i> Congratulations! You
+                                    successfully passed the test.</p>
+                            <% }else{ %>
+                                <p><i class="fa-solid fa-triangle-exclamation" style="color: gold;"></i> Your test was
+                                    unsuccessful. Please try again.</p>
+                            <% } %>
+                            <br/>
+                            <br/>
+                        <% } %>
+                        <!--Form already filled case-->
+                    <% }else{ %>
+                        <h2>Vehicle Information</h2>
+                        <div class="form-floating">
+                            <input class="form-control" id="name" name="make" type="text"
+                                   placeholder="Enter your name..." value='<%= result.carDetails.make %>'
+                                   data-sb-validations="required"/>
+                            <label for="name">Make</label>
+                            <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                        </div>
+                        <div class="form-floating">
+                            <input class="form-control" id="name" name="model" type="text"
+                                   placeholder="Enter your name..." value='<%= result.carDetails.model %>'
+                                   data-sb-validations="required"/>
+                            <label for="name">Model</label>
+                            <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                        </div>
+                        <div class="form-floating">
+                            <input class="form-control" id="name" name="year" type="text"
+                                   placeholder="Enter your name..." value='<%= result.carDetails.year %>'
+                                   data-sb-validations="required"/>
+                            <label for="name">Year</label>
+                            <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                        </div>
+                        <div class="form-floating">
+                            <input class="form-control" id="name" name="plateNo" type="text"
+                                   placeholder="Enter your name..." value='<%= result.carDetails.plateNo %>'
+                                   data-sb-validations="required"/>
+                            <label for="name">Plate No</label>
+                            <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                        </div>
+                        <br/>
+                        <div class="form-floating">
+                            <input hidden class="form-control" id="name" name="appointmentType" type="text"
+                                   value="G"/>
+                        </div>
+                        <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Submit
+                        </button>
+                        <br/>
+                    <% } %>
                 </form>
+                <% } %>
             </div>
         </div>
     </div>

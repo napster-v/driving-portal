@@ -10,7 +10,14 @@ const UserSchema = new Schema({
   lastName: { type: String, required: true },
   licenseNo: { type: String, required: true, unique: true },
   age: { type: Number, required: true },
-  appointment: { type: Schema.Types.ObjectId, ref: "Appointment" },
+  appointment: {
+    type: Schema.Types.ObjectId,
+    ref: "Appointment",
+    default: null,
+  },
+  testType: { type: String, required: false },
+  feedback: { type: String, required: false, default: "Yet to appear" },
+  isPassed: { type: Boolean, required: false, default: null },
   carDetails: {
     make: String,
     model: String,
@@ -26,11 +33,10 @@ UserSchema.pre("save", function (next) {
   });
 });
 
-UserSchema.pre("save", function (next) {
+UserSchema.post("findOneAndUpdate", function (doc, next) {
   if (!this.licenseNo === "") {
     bcrypt.hash(this.licenseNo, 10, (error, data) => {
       this.licenseNo = data;
-      next();
     });
   }
   next();

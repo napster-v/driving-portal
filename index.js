@@ -24,13 +24,18 @@ const IndexView = require("./controllers/IndexViewController");
 const RegisterController = require("./controllers/RegisterController");
 const LoginController = require("./controllers/LoginController");
 const G2TestController = require("./controllers/G2TestController");
+const GTestController = require("./controllers/GTestController");
 const AppointmentView = require("./controllers/AppointmentViewController");
 const AppointmentFetchController = require("./controllers/AppointmentFetchController");
-const AuthMiddleware = require("./middleware/AuthFilter");
+const ExaminerView = require("./controllers/ExaminerViewController");
+const CandidateView = require("./controllers/CandidateViewController");
+const ExaminerFeedbackController = require("./controllers/ExaminerFeedbackController");
 
+const AuthMiddleware = require("./middleware/AuthFilter");
 mongoose.connect(
   "mongodb+srv://fullstackp:qEteQu72of0mSMMx@cluster0.2w7svte.mongodb.net/?retryWrites=true&w=majority"
 );
+
 mongoose.connection.on("connected", () => {
   console.log("connected to database");
 });
@@ -40,7 +45,7 @@ app.use(
     secret: "abcd1234",
     resave: true,
     saveUninitialized: true,
-    cookie: { maxAge: 60000 },
+    // cookie: { maxAge: 60000 },
   })
 );
 
@@ -56,7 +61,6 @@ app.listen(port, function () {
   console.log("Listening on port 3000");
   console.log("Application running on http://localhost:3000");
 });
-
 //HTML pages Views
 app.get("/", IndexView);
 app.get("/login", LoginView);
@@ -66,9 +70,15 @@ app.get("/dashboard", AuthMiddleware, DashboardView);
 app.get("/g", AuthMiddleware, GTestView);
 app.get("/g2", AuthMiddleware, G2TestView);
 app.get("/appointment", AuthMiddleware, AppointmentView);
+app.get("/examiner", AuthMiddleware, ExaminerView);
+let AdminView = require("./controllers/AdminViewController");
+app.get("/users", AuthMiddleware, AdminView);
+app.get("/candidate/:id", AuthMiddleware, CandidateView);
 
 //APIs (Form Data)
 app.post("/register", RegisterController);
 app.post("/authenticate", LoginController);
-app.post("/update", AuthMiddleware, G2TestController);
+app.post("/g2Update", AuthMiddleware, G2TestController);
+app.post("/gUpdate", AuthMiddleware, GTestController);
 app.post("/fetch", AuthMiddleware, AppointmentFetchController);
+app.post("/feedback", AuthMiddleware, ExaminerFeedbackController);
