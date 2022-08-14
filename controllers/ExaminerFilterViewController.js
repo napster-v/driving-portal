@@ -3,13 +3,13 @@ module.exports = async (req, res) => {
   let args = {};
   switch (req.body.filter) {
     case "all":
-      args = { testType: { $ne: null }, isPassed: { $in: [false, null] } };
+      args = { testType: { $ne: null } };
       break;
     case "g":
-      args = { testType: "G", isPassed: { $in: [false, null] } };
+      args = { testType: "G" };
       break;
     case "g2":
-      args = { testType: "G2", isPassed: { $in: [false, null] } };
+      args = { testType: "G2" };
       break;
   }
   User.find(args)
