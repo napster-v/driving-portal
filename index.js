@@ -30,8 +30,11 @@ const AppointmentFetchController = require("./controllers/AppointmentFetchContro
 const ExaminerView = require("./controllers/ExaminerViewController");
 const CandidateView = require("./controllers/CandidateViewController");
 const ExaminerFeedbackController = require("./controllers/ExaminerFeedbackController");
-
+const AdminView = require("./controllers/AdminViewController");
 const AuthMiddleware = require("./middleware/AuthFilter");
+const ExaminerFilterView=require("./controllers/ExaminerFilterViewController");
+
+
 mongoose.connect(
   "mongodb+srv://fullstackp:qEteQu72of0mSMMx@cluster0.2w7svte.mongodb.net/?retryWrites=true&w=majority"
 );
@@ -71,7 +74,6 @@ app.get("/g", AuthMiddleware, GTestView);
 app.get("/g2", AuthMiddleware, G2TestView);
 app.get("/appointment", AuthMiddleware, AppointmentView);
 app.get("/examiner", AuthMiddleware, ExaminerView);
-let AdminView = require("./controllers/AdminViewController");
 app.get("/users", AuthMiddleware, AdminView);
 app.get("/candidate/:id", AuthMiddleware, CandidateView);
 
@@ -82,3 +84,4 @@ app.post("/g2Update", AuthMiddleware, G2TestController);
 app.post("/gUpdate", AuthMiddleware, GTestController);
 app.post("/fetch", AuthMiddleware, AppointmentFetchController);
 app.post("/feedback", AuthMiddleware, ExaminerFeedbackController);
+app.post("/filter", AuthMiddleware, ExaminerFilterView);

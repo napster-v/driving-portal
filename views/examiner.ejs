@@ -34,11 +34,18 @@
                         <th scope="col">Car Model</th>
                         <th scope="col">Car Plate No</th>
                         <th scope="col">Test Type</th>
+                        <th scope="col"><form id="filterForm" method="post" action="/filter">
+                                <select onchange="this.form.submit()" name="filter" id="filter" class="custom-select">
+                                    <option>Select a type to filter</option>
+                                    <option value="all">All</option>
+                                    <option value="g2">G2</option>
+                                    <option value="g">G</option>
+                                </select>
+                            </form></th>
                     </tr>
                     </thead>
                     <tbody>
                     <% for(var i = 0; i < data.length; i++){ %>
-<!--                        <p><% data[i]._id %></p>-->
                         <tr onclick='window.location="/candidate/<%= data[i]._id %>"' style="cursor: pointer">
                             <th scope="row"><%= i + 1 %></th>
                             <td><%= data[i].firstName %></td>
@@ -47,8 +54,8 @@
                             <td><%= data[i].carDetails.model %></td>
                             <td><%= data[i].carDetails.plateNo %></td>
                             <td><%= data[i].testType %></td>
+                            <td></td>
                         </tr>
-<!--                        </a>-->
                     <% } %>
                     </tbody>
                 </table>
