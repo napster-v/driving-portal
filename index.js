@@ -36,7 +36,7 @@ const ExaminerFilterView=require("./controllers/ExaminerFilterViewController");
 
 
 mongoose.connect(
-  "mongodb+srv://fullstackp:qEteQu72of0mSMMx@cluster0.2w7svte.mongodb.net/?retryWrites=true&w=majority"
+  "mongodb+srv://fullstackp:<PASSWORD_REMOVED>@cluster0.2w7svte.mongodb.net/?retryWrites=true&w=majority"
 );
 
 mongoose.connection.on("connected", () => {
